@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax con XMLHttpRequest</title>
+  <link rel="stylesheet" href="01-estilo.css">
+</head>
+
+<body>
+
+  <div class="contenedor">
+    <h1>Ajax con XMLHttpRequest</h1>
+    <div class="contenido">
+
+    </div>
+    <button id="btn">Acceder al servidor</button>
+
+  </div>
+
+
+  <script>
+    const imgURL = "https://media.gettyimages.com/vectors/programming-projection-vector-id483586453?s=2048x2048"
+    const contenido = document.querySelector(".contenido");
+    const btn = document.getElementById("btn");
+    url_file = "./user.json";
+
+    //declaramos la función asíncrona que realiza el fetch
+    //y devuelve un objeto con el usuario
+    async function fetchUser(url){
+      const response = await fetch(url);
+      if (response.status === 200)
+      {
+        const user = await response.json();
+        return user;
+      }else{
+        return null;
+      }
+        
+    }
+
+
+    btn.addEventListener("click", e=>{
+      
+      fetchUser("./user.json").then(user =>{
+          contenido.classList.add("success");
+          console.log(user);
+          const p = document.createElement("p");
+          const p2 = document.createElement("p");
+          p.textContent= `Username: ${user.nombre}`;
+          p2.textContent = `ID: ${user.id}`;
+          contenido.append(p,p2);
+      }).catch(error=> {
+          contenido.classList.add("error")
+          contenido.textContent = error.message;
+      });
+      
+    })
+
+
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax con XMLHttpRequest</title>
+  <link rel="stylesheet" href="01-estilo.css">
+</head>
+
+<body>
+
+  <div class="contenedor">
+    <h1>Ajax con XMLHttpRequest</h1>
+    <div class="contenido">
+
+    </div>
+    <button id="btn">Acceder al servidor</button>
+
+  </div>
+
+
+  <script>
+    const imgURL = "https://media.gettyimages.com/vectors/programming-projection-vector-id483586453?s=2048x2048"
+    const contenido = document.querySelector(".contenido");
+    const btn = document.getElementById("btn");
+
+    //creamos un objeto xhr
+    const xhr = new XMLHttpRequest();
+
+
+    //evento load del XRH
+    xhr.addEventListener("load", e => {
+        console.log(e.target.status);
+        console.log(e.target.statusText);
+        
+        if(e.target.status === 200)
+        {
+            console.log(e.target.response);
+            contenido.classList.add("success")
+           
+            const img = new Image();
+            img.src = URL.createObjectURL(e.target.response);
+            console.log (img.src);
+
+            contenido.append(img);
+            
+
+        }else{
+          contenido.classList.add("error")
+          contenido.textContent = e.target.statusText
+        }
+        
+    })
+
+
+    btn.addEventListener("click", e=>{
+      //INIT
+      xhr.open("GET",imgURL);
+      xhr.responseType= "blob";
+
+      //SEND
+      xhr.send();
+    })
+    
+    
+
+    //asignar evento a botón
+
+
+
+  </script>
+
+</body>
+
+</html>

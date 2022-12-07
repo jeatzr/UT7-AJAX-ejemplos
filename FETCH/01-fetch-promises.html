@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax con XMLHttpRequest</title>
+  <link rel="stylesheet" href="01-estilo.css">
+</head>
+
+<body>
+
+  <div class="contenedor">
+    <h1>Ajax con XMLHttpRequest</h1>
+    <div class="contenido">
+
+    </div>
+    <button id="btn">Acceder al servidor</button>
+
+  </div>
+
+
+  <script>
+    const imgURL = "https://media.gettyimages.com/vectors/programming-projection-vector-id483586453?s=2048x2048"
+    const contenido = document.querySelector(".contenido");
+    const btn = document.getElementById("btn");
+    url_file = "./user.json";
+
+
+    btn.addEventListener("click", e=>{
+      
+      fetch(url_file)
+        .then(response =>{
+          console.log(response)
+          return response.json();
+        })
+        .then(objeto => {
+          contenido.classList.add("success");
+          console.log(objeto);
+          const p = document.createElement("p");
+          const p2 = document.createElement("p");
+          p.textContent= `Username: ${objeto.nombre}`;
+          p2.textContent = `ID: ${objeto.id}`;
+          contenido.append(p,p2);
+        
+        })
+        .catch(error=> {
+          contenido.classList.add("error")
+          contenido.textContent = error.message;
+        });
+    })
+
+
+
+  </script>
+
+</body>
+
+</html>
